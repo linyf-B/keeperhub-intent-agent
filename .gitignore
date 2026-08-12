@@ -10,3 +10,4 @@ proofs/
 docs/demo-audio/_review/
 docs/demo-audio/_upload_demo.py
 docs/demo-audio/_gen_tts.py
+docs/_gen_logo.py
