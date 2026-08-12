@@ -55,7 +55,17 @@ CLI: `npm start` → `whoami` → paste address into transfer.
 
 ## MCP (Cursor / Claude)
 
-See README **MCP server** section — `npm run mcp` exposes simulate / execute / status tools over stdio.
+- **Local:** `npm run mcp` — 14 tools (REST + workflow + official MCP bridge)
+- **Official (recommended):** `https://app.keeperhub.com/mcp` with `Authorization: Bearer kh_...`
+
+See `docs/KEEPERHUB_SURFACES.md` and `docs/X402_MPP.md`.
+
+## Full demo (treasury scenario)
+
+```bash
+npm run demo
+# whoami → balance workflow → transfer → audit trail → official MCP tool list
+```
 
 ## If something breaks
 

@@ -23,7 +23,8 @@ Evidence is in-repo and runnable; judges can verify in under 10 minutes with a t
 
 - **Starter template:** `src/bootstrap.ts` is a minimal, documented reference implementation for headless onboarding.
 - **Actionable feedback:** each item includes repro steps and a concrete doc/API improvement — suitable for a KeeperHub docs PR.
-- **Agent-native:** same flow powers CLI (`npm run demo`) and MCP tools (`npm run mcp`) so LLM runtimes reuse one execution layer.
+- **Agent-native:** same flow powers CLI, 14 local MCP tools, and official MCP bridge — see `docs/KEEPERHUB_SURFACES.md`.
+- **Docs PR ready:** `contributions/keeperhub-docs-quickstart-pr.md` — mergeable quickstart for KeeperHub docs.
 
 ## Links
 

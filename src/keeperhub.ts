@@ -1,6 +1,8 @@
 import { createHash, randomUUID } from "node:crypto";
 import { KEEPERHUB_BASE } from "./config.js";
 
+import { withRetry } from "./retry.js";
+
 export type ApiResult<T = unknown> = {
   status: number;
   body: T;
@@ -24,18 +26,21 @@ export async function keeperhubFetch<T = any>(
     headers.set("Authorization", `Bearer ${apiKey}`);
   }
 
-  const res = await fetch(`${KEEPERHUB_BASE}${path}`, {
-    ...rest,
-    headers,
-  });
-  const text = await res.text();
-  let body: any;
-  try {
-    body = text ? JSON.parse(text) : {};
-  } catch {
-    body = { error: text.slice(0, 500) };
-  }
-  return { status: res.status, body, headers: res.headers };
+  const res = await withRetry(
+    async () => {
+      const r = await fetch(`${KEEPERHUB_BASE}${path}`, { ...rest, headers });
+      const text = await r.text();
+      let body: any;
+      try {
+        body = text ? JSON.parse(text) : {};
+      } catch {
+        body = { error: text.slice(0, 500) };
+      }
+      return { status: r.status, body, headers: r.headers };
+    },
+    { label: path },
+  );
+  return res as ApiResult<T>;
 }
 
 export function mustOk<T>(res: ApiResult<T>, what: string): T {
@@ -164,4 +169,83 @@ export async function listEnabledTestnets(apiKey: string) {
 
 export function newTaskId(prefix = "agent"): string {
   return `${prefix}-${randomUUID()}`;
+}
+
+export type ContractCallBody = {
+  chainId: number;
+  contractAddress: string;
+  functionName: string;
+  functionArgs?: string;
+  abi?: string;
+  simulate?: boolean;
+};
+
+export async function contractCall(apiKey: string, body: ContractCallBody) {
+  const { simulate, ...rest } = body;
+  const payload = simulate ? { ...rest, simulate: true } : rest;
+  return keeperhubFetch("/api/execute/contract-call", {
+    method: "POST",
+    apiKey,
+    body: JSON.stringify(payload),
+  });
+}
+
+/** Read native ETH balance via workflow engine (web3/check-balance) — no local RPC. */
+export async function checkBalanceViaWorkflow(
+  apiKey: string,
+  address: string,
+  chainId: number,
+): Promise<{ workflowId: string; executionId: string; output: any; audit: any }> {
+  const { createBalanceCheckWorkflow, executeWorkflow, waitForWorkflowExecution } =
+    await import("./keeperhub-workflows.js");
+  const wf = await createBalanceCheckWorkflow(apiKey, address, chainId);
+  const run = await executeWorkflow(apiKey, wf.id, { address });
+  const receipt = await waitForWorkflowExecution(apiKey, run.executionId);
+  return {
+    workflowId: wf.id,
+    executionId: run.executionId,
+    output: receipt.output,
+    audit: receipt,
+  };
+}
+
+/** Safe direct write: simulate → execute → poll with full audit trail. */
+export async function safeDirectTransfer(
+  apiKey: string,
+  transfer: TransferBody,
+  taskIdPrefix = "safe-transfer",
+) {
+  const sim = await simulateTransfer(apiKey, transfer);
+  const simBody: any = sim.body;
+  if (sim.status >= 400 || !simBody?.success || simBody?.wouldRevert) {
+    throw new Error(`Simulation failed: ${JSON.stringify(simBody)}`);
+  }
+
+  const taskId = newTaskId(taskIdPrefix);
+  const idem = stableIdempotencyKey({
+    taskId,
+    chainId: transfer.chainId,
+    recipientAddress: transfer.recipientAddress,
+    amount: transfer.amount,
+    tokenAddress: transfer.tokenAddress,
+  });
+
+  let execRes = await executeTransfer(apiKey, transfer, idem);
+  if (execRes.status >= 400) {
+    const body: any = execRes.body;
+    if (body?.originalExecutionId) {
+      const status = await pollExecutionStatus(apiKey, body.originalExecutionId);
+      return { taskId, idempotencyKey: idem, simulation: simBody, status, executionId: body.originalExecutionId };
+    }
+    throw new Error(`Execute failed: HTTP ${execRes.status} ${JSON.stringify(body)}`);
+  }
+
+  const execBody: any = execRes.body;
+  const executionId = execBody.executionId;
+  if (!executionId) {
+    throw new Error(`No executionId: ${JSON.stringify(execBody)}`);
+  }
+
+  const status = await pollExecutionStatus(apiKey, executionId);
+  return { taskId, idempotencyKey: idem, simulation: simBody, status, executionId };
 }

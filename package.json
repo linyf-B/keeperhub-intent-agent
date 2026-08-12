@@ -13,7 +13,8 @@
     "bootstrap": "tsx src/bootstrap.ts",
     "demo": "tsx src/demo.ts",
     "mcp": "tsx src/mcp-server.ts",
-    "typecheck": "tsc -p tsconfig.json --noEmit"
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --import tsx --test tests/agent.test.ts"
   },
   "engines": {
     "node": ">=20"
