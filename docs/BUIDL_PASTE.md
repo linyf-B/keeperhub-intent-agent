@@ -8,16 +8,25 @@
 |------|--------|
 | Project name | KeeperHub Intent Agent |
 | GitHub | https://github.com/linyf-B/keeperhub-intent-agent |
-| Demo video | https://litter.catbox.moe/0dfp6u.mp4 |
+| Demo video | https://github.com/linyf-B/keeperhub-intent-agent/raw/main/docs/demo.mp4 |
 | Transaction | https://sepolia.basescan.org/tx/0xebf18e68005f5ffdc75188a116100b9461a789ebf890bb7d7a983ead19504ff5 |
 
-> Demo 说明：当前为可播放直链（已验证 200 / video/mp4）。Litterbox **约 72 小时过期**；推仓库后可改用  
-> `https://github.com/linyf-B/keeperhub-intent-agent/raw/main/docs/demo.mp4`  
-> 或 YouTube/Loom 未列出链接（更稳）。
+> 持久 Demo 链接（已上传，可直接填 BUIDL）：  
+> `https://github.com/linyf-B/keeperhub-intent-agent/raw/main/docs/demo.mp4`
+
+## Profile（第 1 步，你当前这页）
+
+| 字段 | 填什么 |
+|------|--------|
+| BUIDL name | KeeperHub Intent Agent |
+| Logo | 可跳过，或随便一张 480×480 PNG |
+| Vision | Natural-language transfer intent executed onchain via KeeperHub Direct Execution API (simulate → execute → poll). |
+| Category | **Crypto / Web3** |
+
+Links / Demo / Transaction 一般在后面 **Details** 或 **Submission** 步填；见上表字段。
 
 ## Description（整段粘贴）
-
-Most agent demos stop at “the model decided something clever.” This hackathon asks for the last mile: the decision must become a real transaction.
+ “the model decided something clever.” This hackathon asks for the last mile: the decision must become a real transaction.
 
 KeeperHub Intent Agent:
 
