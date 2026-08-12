@@ -26,7 +26,7 @@ Optional bootstrap (`npm run bootstrap`) uses KeeperHub’s SIWE headless onboar
 | Field | Value |
 |-------|-------|
 | GitHub | https://github.com/linyf-B/keeperhub-intent-agent |
-| Demo video | _YouTube / Loom_ |
+| Demo video | https://litter.catbox.moe/0dfp6u.mp4 （临时 72h；持久版见仓库 `docs/demo.mp4`） |
 | Transaction proof | https://sepolia.basescan.org/tx/0xebf18e68005f5ffdc75188a116100b9461a789ebf890bb7d7a983ead19504ff5 |
 
 （备用证明 tx：https://sepolia.basescan.org/tx/0x93c6ae1ef7aa425d33acfd022e2b12065cc2b9edd891217774ccb4bdf6fbc611 ）

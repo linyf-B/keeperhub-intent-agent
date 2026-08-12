@@ -1,30 +1,12 @@
-# Demo video script (~90–120 seconds)
+# Demo 文件怎么用
 
-Record terminal + browser. Speak in Chinese or English.
+已拆成两个文件（推荐只按下面用）：
 
-1. **(10s) Hook**  
-   “Agents usually stop at reasoning. This one lands a real transfer through KeeperHub.”
+| 文件 | 用途 | 是否入镜 |
+|------|------|----------|
+| [`DEMO_CUE.md`](./DEMO_CUE.md) | 你跟着操作、照着念 | **否** |
+| [`demo-show.html`](./demo-show.html) | 镜头里展示的产品页 | **是** |
 
-2. **(20s) Show code path**  
-   Open `src/agent.ts` briefly — highlight simulate → execute → poll.  
-   Say: “Execution is KeeperHub Direct Execution API, not a local ethers send.”
+旧的 [`demo-record.html`](./demo-record.html) 把「操作说明 + 展示」混在一起，容易露出 STEP 标识，**录视频请改用 `demo-show.html`**。
 
-3. **(40s) Live run**  
-   ```bash
-   npm run demo
-   ```  
-   Show `whoami` org wallet, then the transfer completing.  
-   Copy `transactionLink`.
-
-4. **(20s) Proof**  
-   Open the explorer link in a browser. Point at success / hash.  
-   If sponsored, note gas may be paid by relayer — hash from KeeperHub status is authoritative.
-
-5. **(10s) Close**  
-   “Repo + tx link submitted on DoraHacks. Thanks KeeperHub.”
-
-## Tips
-
-- Use Base Sepolia, `amount 0` self-transfer — fastest reliable proof.
-- Zoom terminal font; hide `.env` / API keys.
-- Upload to YouTube (unlisted) or Loom before the deadline.
+完整操作步骤见 `DEMO_CUE.md`。

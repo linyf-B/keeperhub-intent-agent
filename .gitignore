@@ -6,3 +6,7 @@ dist/
 .DS_Store
 proofs/
 .kh-session.json
+# demo review artifacts
+docs/demo-audio/_review/
+docs/demo-audio/_upload_demo.py
+docs/demo-audio/_gen_tts.py

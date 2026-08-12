@@ -60,9 +60,10 @@ https://sepolia.basescan.org/tx/0x93c6ae1ef7aa425d33acfd022e2b12065cc2b9edd89121
 ## 4. 未完成（新窗口接着做）
 
 1. **录 Demo 视频**（当前卡在这里）
-   - 打开本地：`docs\demo-record.html`
-   - Windows：`Win + G` 录 60–90 秒，按页面 STEP 0–5 照读
-   - STEP 4 点开 BaseScan 交易页
+   - **操作稿（不入镜）**：`docs\DEMO_CUE.md`
+   - **展示页（入镜）**：`docs\demo-show.html`
+   - Windows：`Win + G` 录 60–90 秒，按 CUE 切屏+口播
+   - 打开 BaseScan 交易页滚到 Success
    - 上传 Loom / YouTube（未列出）→ 得到视频链接
 
 2. **Submit BUIDL**  
@@ -86,9 +87,11 @@ https://sepolia.basescan.org/tx/0x93c6ae1ef7aa425d33acfd022e2b12065cc2b9edd89121
 
 | 文件 | 用途 |
 |------|------|
-| `docs/demo-record.html` | 对着录 Demo |
+| `docs/DEMO_CUE.md` | 录 Demo 操作稿（不入镜） |
+| `docs/demo-show.html` | 录 Demo 展示页（入镜） |
+| `docs/demo-record.html` | 旧合并页（勿再入镜） |
 | `docs/SUBMISSION.md` | DoraHacks 粘贴文案 |
-| `docs/DEMO_SCRIPT.md` | 口播脚本 |
+| `docs/DEMO_SCRIPT.md` | 指向 CUE / show 的说明 |
 | `docs/ONBOARDING_FEEDBACK.md` | 可选 $500 onboarding bounty |
 | `src/agent.ts` | 核心：simulate → execute → poll |
 | `src/bootstrap.ts` | SIWE 无验证码建号 |
