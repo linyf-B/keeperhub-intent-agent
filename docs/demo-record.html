@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>KeeperHub Intent Agent — Demo</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --card: #121a2b;
+      --text: #e8eefc;
+      --muted: #9db0d0;
+      --accent: #3ddc97;
+      --warn: #ffb020;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(1200px 600px at 20% -10%, #1a2744, var(--bg));
+      color: var(--text);
+      line-height: 1.5;
+    }
+    main { max-width: 920px; margin: 0 auto; padding: 32px 20px 80px; }
+    h1 { font-size: 2rem; margin: 0 0 8px; }
+    .sub { color: var(--muted); margin-bottom: 28px; }
+    .card {
+      background: var(--card);
+      border: 1px solid #243352;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin: 14px 0;
+    }
+    .step { color: var(--accent); font-weight: 700; letter-spacing: .04em; font-size: .85rem; }
+    a { color: #7eb6ff; }
+    code, pre {
+      background: #0a101c;
+      border-radius: 8px;
+      font-family: Consolas, monospace;
+    }
+    code { padding: 2px 6px; }
+    pre { padding: 14px; overflow: auto; white-space: pre-wrap; }
+    .ok { color: var(--accent); font-weight: 700; }
+    .big { font-size: 1.15rem; }
+    .timer { color: var(--warn); font-weight: 600; }
+    .speak { border-left: 3px solid var(--accent); padding-left: 12px; color: #d7e4ff; }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>KeeperHub Intent Agent</h1>
+    <p class="sub">DoraHacks · Agents Onchain Hackathon · Demo page（对着这页录 60–90 秒即可）</p>
+
+    <div class="card">
+      <div class="step">STEP 0 · 怎么开始录</div>
+      <p class="big">Windows：按 <code>Win + G</code> → 点录制按钮 → 录完再按 <code>Win + Alt + R</code> 停止。</p>
+      <p>录完视频一般在：<code>视频\\Captures</code>。也可打开 <a href="https://www.loom.com/" target="_blank">Loom</a> 点 Record。</p>
+    </div>
+
+    <div class="card">
+      <div class="step">STEP 1 · 说什么（照读） <span class="timer">~15秒</span></div>
+      <p class="speak">“这是 KeeperHub Intent Agent。Agent 负责理解自然语言转账意图，真正的链上执行走 KeeperHub Direct Execution API，不是本地钱包直接发交易。”</p>
+    </div>
+
+    <div class="card">
+      <div class="step">STEP 2 · 指一下仓库 <span class="timer">~15秒</span></div>
+      <p>打开并停留 3 秒：</p>
+      <p class="big"><a href="https://github.com/linyf-B/keeperhub-intent-agent" target="_blank">https://github.com/linyf-B/keeperhub-intent-agent</a></p>
+      <p class="speak">“源码在 GitHub，核心流程是 simulate → execute → 轮询拿 transactionLink。”</p>
+    </div>
+
+    <div class="card">
+      <div class="step">STEP 3 · 展示真实运行结果 <span class="timer">~25秒</span></div>
+      <p class="ok">✓ Onchain execution completed via KeeperHub</p>
+      <pre>you&gt; transfer 0 to 0xada3b03c57242fbe60799ffce8d466f69dd2ddc9
+executionId: bg4vu58k2xig9tu462qoy
+transactionHash: 0xebf18e68005f5ffdc75188a116100b9461a789ebf890bb7d7a983ead19504ff5
+sponsored: true
+chain: Base Sepolia (84532)</pre>
+      <p class="speak">“自然语言指令解析后，经 KeeperHub 模拟并上链，已拿到交易哈希。”</p>
+    </div>
+
+    <div class="card">
+      <div class="step">STEP 4 · 打开浏览器证明 <span class="timer">~25秒</span></div>
+      <p>点击打开浏览器交易页，滚动到 Success：</p>
+      <p class="big"><a href="https://sepolia.basescan.org/tx/0xebf18e68005f5ffdc75188a116100b9461a789ebf890bb7d7a983ead19504ff5" target="_blank">BaseScan 交易证明（点这里）</a></p>
+      <p class="speak">“这是 Base Sepolia 上的真实交易。提交材料包含 GitHub、本 Demo、以及这笔 transaction link。”</p>
+    </div>
+
+    <div class="card">
+      <div class="step">STEP 5 · 收尾 <span class="timer">~10秒</span></div>
+      <p class="speak">“感谢 KeeperHub 与 DoraHacks。以上是 Intent Agent 的完整演示。”</p>
+      <p>停止录制 → 上传 Loom / YouTube（未列出）→ 把链接拿去填 DoraHacks。</p>
+    </div>
+  </main>
+</body>
+</html>
