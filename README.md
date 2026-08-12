@@ -6,6 +6,17 @@ Built for the [KeeperHub Agents Onchain Hackathon](https://dorahacks.io/hackatho
 
 > One rule of the hackathon: land real transactions via KeeperHub — not mocks. This project does exactly that: **simulate → execute → poll status → explorer link**.
 
+## Onboarding contribution (bounty)
+
+This repo is also a **zero→first-tx starter template** for new KeeperHub builders:
+
+| Asset | Purpose |
+|-------|---------|
+| [`npm run bootstrap`](./src/bootstrap.ts) | Headless SIWE signup → `kh_` key + `.env` + proof transfer (no email captcha) |
+| [`docs/QUICKSTART_HACKATHON.md`](./docs/QUICKSTART_HACKATHON.md) | 5-step hacker one-pager |
+| [`docs/ONBOARDING_FEEDBACK.md`](./docs/ONBOARDING_FEEDBACK.md) | Reproducible UX friction + suggested doc/API fixes |
+| [`docs/BOUNTY_PITCH.md`](./docs/BOUNTY_PITCH.md) | Executive summary for onboarding bounty judges |
+
 ## What it does
 
 ```
@@ -61,6 +72,35 @@ Default chain: **Base Sepolia (`84532`)**. Zero-value self-transfer works even w
 | `send 0.0001 to 0x... on 84532` | Same, with amount + chain |
 
 Proofs are saved under `proofs/`.
+
+## MCP server (Cursor / Claude)
+
+Expose KeeperHub simulate / execute / status as MCP tools over stdio:
+
+```bash
+npm run mcp
+```
+
+**Cursor** — add to `.cursor/mcp.json` (or global MCP settings):
+
+```json
+{
+  "mcpServers": {
+    "keeperhub-intent-agent": {
+      "command": "npx",
+      "args": ["tsx", "src/mcp-server.ts"],
+      "cwd": "/absolute/path/to/keeperhub-intent-agent",
+      "env": {
+        "KEEPERHUB_API_KEY": "kh_..."
+      }
+    }
+  }
+}
+```
+
+Tools: `keeperhub_simulate_transfer` · `keeperhub_execute_transfer` · `keeperhub_get_status`
+
+Requires `KEEPERHUB_API_KEY` in env (or `.env` when run from repo root).
 
 ## Hackathon submission checklist
 
