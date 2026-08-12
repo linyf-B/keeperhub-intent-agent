@@ -102,12 +102,12 @@ Tools: `keeperhub_simulate_transfer` · `keeperhub_execute_transfer` · `keeperh
 
 Requires `KEEPERHUB_API_KEY` in env (or `.env` when run from repo root).
 
-## Hackathon submission checklist
+## Hackathon proof
 
-- [ ] Public GitHub repo (this project)
-- [ ] Demo video (see `docs/DEMO_SCRIPT.md`)
-- [ ] Explorer / KeeperHub `transactionLink` from a successful run
-- [ ] Paste text from `docs/SUBMISSION.md` into DoraHacks BUIDL form
+| Item | Link |
+|------|------|
+| Demo video | [`docs/demo.mp4`](./docs/demo.mp4) · [raw URL](https://github.com/linyf-B/keeperhub-intent-agent/raw/main/docs/demo.mp4) |
+| Onchain tx | [Base Sepolia explorer](https://sepolia.basescan.org/tx/0xebf18e68005f5ffdc75188a116100b9461a789ebf890bb7d7a983ead19504ff5) |
 
 ## Security
 
