@@ -59,25 +59,15 @@ https://sepolia.basescan.org/tx/0x93c6ae1ef7aa425d33acfd022e2b12065cc2b9edd89121
 
 ## 4. 未完成（新窗口接着做）
 
-1. **录 Demo 视频**（当前卡在这里）
-   - **操作稿（不入镜）**：`docs\DEMO_CUE.md`
-   - **展示页（入镜）**：`docs\demo-show.html`
-   - Windows：`Win + G` 录 60–90 秒，按 CUE 切屏+口播
-   - 打开 BaseScan 交易页滚到 Success
-   - 上传 Loom / YouTube（未列出）→ 得到视频链接
+1. [x] **录 Demo 视频**（本地 `8月12日.mp4` 已审过，可用）
+2. [~] **Demo 链接**  
+   - 临时直链（约 72h）：https://litter.catbox.moe/0dfp6u.mp4  
+   - 仓库内：`docs/demo.mp4`（push 后可用 raw 持久链接）
+3. [ ] **Submit BUIDL**（需你在浏览器 **Log in with GitHub**，自动化无法代登）  
+   打开：https://dorahacks.io/hackathon/agents-onchain → Submit BUIDL  
+   **照抄清单**：`docs/BUIDL_PASTE.md`
 
-2. **Submit BUIDL**  
-   打开：https://dorahacks.io/hackathon/agents-onchain → 提交 BUIDL  
-
-   | 字段 | 值 |
-   |------|-----|
-   | Project name | KeeperHub Intent Agent |
-   | GitHub | https://github.com/linyf-B/keeperhub-intent-agent |
-   | Transaction | 上面主证明 tx |
-   | Demo video | （录完后的链接） |
-   | Description | 复制 `docs/SUBMISSION.md` 里 Description |
-
-3. **安全收尾**
+4. **安全收尾**
    - 删除聊天里发过的 GitHub PAT / 曾暴露的密码（务必已改密）
    - 勿把 `.env`、私钥提交进仓库
 
