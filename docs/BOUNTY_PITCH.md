@@ -11,6 +11,16 @@ New builders hitting KeeperHub for the Agents Onchain hackathon lose the first h
 
 ## Our contribution
 
+**Vision:** *The agent that onboard itself — then executes onchain via KeeperHub.*
+
+### Three pillars
+
+| Pillar | Doc |
+|--------|-----|
+| Self-registering Agent | [`docs/SELF_ONBOARDING_AGENT.md`](./SELF_ONBOARDING_AGENT.md) |
+| Audit-first Last Mile | [`docs/AUDIT_FIRST.md`](./AUDIT_FIRST.md) |
+| Dual MCP Execution Layer | [`docs/DUAL_MCP.md`](./DUAL_MCP.md) |
+
 This repo ships a **copy-paste onboarding path**, not just a demo transfer:
 
 1. **`npm run bootstrap`** — headless SIWE (`/api/auth/siwe/*`) mints a `kh_` org API key without browser captcha; polls `/api/user` until `walletAddress` is ready; writes `.env`; runs amount-`0` self-transfer proof on Base Sepolia.

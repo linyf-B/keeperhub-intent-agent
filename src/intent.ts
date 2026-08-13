@@ -1,3 +1,5 @@
+import { VISION } from "./pitch.js";
+
 export type TransferIntent = {
   kind: "transfer";
   to: string;
@@ -168,29 +170,21 @@ export function parseIntent(input: string): Intent {
   };
 }
 
-export const HELP_TEXT = `KeeperHub Intent Agent — natural language → real onchain execution
+export const HELP_TEXT = `KeeperHub Intent Agent
+${VISION}
 
-Core (Direct Execution REST):
-  transfer 0 to 0xYourOrgWallet
-  send 0.0001 to 0xRecipient on 84532
-  audit direct_abc123          — show receipts / audit trail
+Three pillars:
+  1) Self-registering Agent     → npm run bootstrap (headless SIWE → kh_ key)
+  2) Audit-first Last Mile      → scenario treasury 0xOrgWallet (simulate→audit)
+  3) Dual MCP Execution Layer   → npm run mcp + docs/mcp-dual.json.example
 
-Workflows API:
-  workflows                    — list org workflows
-  setup workflow on 84532      — create balance-check workflow
-  run workflow wf_...          — execute + wait for audit trail
-
-Official KeeperHub MCP (remote):
-  mcp tools                    — list hosted MCP tools
-  search workflows mcp-test    — marketplace search (x402-aware)
-
-Scenarios (multi-step planner):
+Commands:
+  help | whoami
+  transfer 0 to 0x... | audit direct_...
   scenario treasury 0xOrgWallet on 84532
-  treasury proof transfer 0 to 0x...   — balance → transfer → audit
+  workflows | setup workflow | run workflow wf_...
+  mcp tools | search workflows <query>
 
-Other:
-  whoami | help
-
-Surfaces: REST Direct Execution · Workflows API · hosted MCP · x402/MPP (see docs/X402_MPP.md)
+Docs: docs/SELF_ONBOARDING_AGENT.md · docs/AUDIT_FIRST.md · docs/DUAL_MCP.md
 Default chain: Base Sepolia (84532). Set KEEPERHUB_API_KEY=kh_... in .env
 `;

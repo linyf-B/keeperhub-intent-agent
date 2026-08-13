@@ -12,6 +12,7 @@
     "agent": "tsx src/cli.ts",
     "bootstrap": "tsx src/bootstrap.ts",
     "demo": "tsx src/demo.ts",
+    "demo:pitch": "tsx src/demo.ts",
     "mcp": "tsx src/mcp-server.ts",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "test": "node --import tsx --test tests/agent.test.ts"

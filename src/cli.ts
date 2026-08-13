@@ -6,6 +6,7 @@ import path from "node:path";
 import { KeeperHubIntentAgent } from "./agent.js";
 import { requireApiKey } from "./config.js";
 import { HELP_TEXT } from "./intent.js";
+import { printPitchBanner } from "./pitch.js";
 
 async function saveProof(result: Awaited<ReturnType<KeeperHubIntentAgent["handle"]>>) {
   if (!result.transactionLink && !result.executionId) return;
@@ -38,6 +39,7 @@ async function main() {
     process.exit(result.ok ? 0 : 1);
   }
 
+  console.log(printPitchBanner());
   console.log(HELP_TEXT);
   console.log("Interactive mode. Type a command (Ctrl+C to exit).\n");
   const rl = createInterface({ input, output });

@@ -1,130 +1,90 @@
 # KeeperHub Intent Agent
 
-Natural-language agent that turns instructions into **real onchain transactions** through [KeeperHub](https://keeperhub.com) — built for the [Agents Onchain Hackathon](https://dorahacks.io/hackathon/agents-onchain).
+**Vision:** *The agent that onboard itself — then executes onchain via KeeperHub.*
 
-> Hackathon rule: land real transactions via KeeperHub. This project covers **Direct Execution REST**, **Workflows API**, **hosted MCP**, **audit trails**, and **x402/MPP** integration paths.
+Built for the [Agents Onchain Hackathon](https://dorahacks.io/hackathon/agents-onchain).
 
-## KeeperHub surfaces (judging checklist)
+## Three pillars
+
+| Pillar | What | Try it |
+|--------|------|--------|
+| **1. Self-registering Agent** | Headless SIWE → `kh_` key → first tx (no captcha) | `npm run bootstrap` |
+| **2. Audit-first Last Mile** | simulate gate → execute → `receipts` / verified hashes | `npm run demo` |
+| **3. Dual MCP Layer** | Local REST/workflow MCP + official `app.keeperhub.com/mcp` | [`docs/mcp-dual.json.example`](./docs/mcp-dual.json.example) |
+
+Full pitch: [`docs/PITCH_THREE_PILLARS.md`](./docs/PITCH_THREE_PILLARS.md) · [`AGENTS.md`](./AGENTS.md)
+
+## Quick start
+
+```bash
+npm install
+cp .env.example .env          # or: ETH_PRIVATE_KEY=0x... npm run bootstrap
+npm run demo                  # pillars 2+3 (needs kh_ key)
+npm start                     # interactive CLI
+```
+
+## KeeperHub surfaces
 
 | Surface | Status |
 |---------|--------|
-| Direct Execution (simulate → execute → poll) | ✅ |
-| Workflows API (create / execute / wait) | ✅ |
-| Official hosted MCP (`app.keeperhub.com/mcp`) | ✅ bridge |
-| Local MCP stdio tools (14 tools) | ✅ `npm run mcp` |
-| Audit trail (`receipts`, `transactionHashes`) | ✅ |
-| x402 / MPP paid workflows | ✅ detect + wallet path |
-| Headless onboarding bootstrap | ✅ |
+| Direct Execution REST | ✅ |
+| Workflows API | ✅ |
+| Official hosted MCP | ✅ bridge |
+| Local MCP (14 tools) | ✅ `npm run mcp` |
+| Audit trail | ✅ |
+| x402 / MPP | ✅ detect + wallet path |
+| Headless bootstrap | ✅ Pillar 1 |
 
-Details: [`docs/KEEPERHUB_SURFACES.md`](./docs/KEEPERHUB_SURFACES.md) · [`docs/FAILURE_MODES.md`](./docs/FAILURE_MODES.md) · [`docs/X402_MPP.md`](./docs/X402_MPP.md)
+Details: [`docs/KEEPERHUB_SURFACES.md`](./docs/KEEPERHUB_SURFACES.md)
 
-## Onboarding contribution (bounty)
+## Onboarding bounty
 
-| Asset | Purpose |
-|-------|---------|
-| [`npm run bootstrap`](./src/bootstrap.ts) | SIWE headless signup → `kh_` key + proof tx |
-| [`docs/QUICKSTART_HACKATHON.md`](./docs/QUICKSTART_HACKATHON.md) | 5-step one-pager |
-| [`docs/ONBOARDING_FEEDBACK.md`](./docs/ONBOARDING_FEEDBACK.md) | Reproducible friction + fixes |
-| [`contributions/keeperhub-docs-quickstart-pr.md`](./contributions/keeperhub-docs-quickstart-pr.md) | Ready-to-open docs PR |
-| [`docs/BOUNTY_PITCH.md`](./docs/BOUNTY_PITCH.md) | Executive summary for judges |
+| Asset | Link |
+|-------|------|
+| Bootstrap | [`src/bootstrap.ts`](./src/bootstrap.ts) |
+| Self-onboarding story | [`docs/SELF_ONBOARDING_AGENT.md`](./docs/SELF_ONBOARDING_AGENT.md) |
+| Feedback | [`docs/ONBOARDING_FEEDBACK.md`](./docs/ONBOARDING_FEEDBACK.md) |
+| Docs PR draft | [`contributions/keeperhub-docs-quickstart-pr.md`](./contributions/keeperhub-docs-quickstart-pr.md) |
+| Bounty pitch | [`docs/BOUNTY_PITCH.md`](./docs/BOUNTY_PITCH.md) |
 
 ## Architecture
 
 ```
-Natural language (CLI)
+Pillar 1: bootstrap (SIWE → kh_ → proof tx)
         │
         ▼
-  Intent parser + planner (treasury scenario)
+Pillar 2: intent + planner → simulate → execute → audit trail
         │
-        ├─► Direct Execution REST ──► simulate → execute → poll → receipts
-        ├─► Workflows API ──────────► check-balance workflow → wait → audit
-        ├─► Local MCP (stdio) ──────► 14 tools for Cursor/Claude
-        └─► Official MCP (HTTP) ────► search/call workflows, x402-aware
+        ▼
+Pillar 3: npm run mcp (local) + app.keeperhub.com/mcp (official)
 ```
 
-## Quick start
-
-### Option A — existing `kh_` key
+## Commands
 
 ```bash
-npm install
-cp .env.example .env   # set KEEPERHUB_API_KEY
-npm run demo           # treasury scenario + tx link
-npm start              # interactive
-```
-
-### Option B — headless bootstrap
-
-```bash
-ETH_PRIVATE_KEY=0x... npm run bootstrap
-npm run demo
-```
-
-## Example commands
-
-```bash
-scenario treasury 0xYourOrgWallet on 84532   # balance → transfer → audit
-transfer 0 to 0xYourOrgWallet
+scenario treasury 0xOrgWallet on 84532
+transfer 0 to 0xOrgWallet
 audit direct_abc123
-workflows
-setup workflow on 84532
-run workflow wf_...
 mcp tools
-search workflows mcp-test
 ```
 
-## MCP configuration
+## MCP — dual config
 
-**Local wrapper** (REST + bridge):
+Copy [`docs/mcp-dual.json.example`](./docs/mcp-dual.json.example) → `.cursor/mcp.json`. See [`docs/DUAL_MCP.md`](./docs/DUAL_MCP.md).
 
-```json
-{
-  "mcpServers": {
-    "keeperhub-intent-agent": {
-      "command": "npx",
-      "args": ["tsx", "src/mcp-server.ts"],
-      "cwd": "/absolute/path/to/keeperhub-intent-agent",
-      "env": { "KEEPERHUB_API_KEY": "kh_..." }
-    }
-  }
-}
-```
-
-**Official hosted MCP** (recommended by KeeperHub):
-
-```json
-{
-  "mcpServers": {
-    "keeperhub-official": {
-      "url": "https://app.keeperhub.com/mcp",
-      "headers": { "Authorization": "Bearer kh_..." }
-    }
-  }
-}
-```
-
-## Tests
+## Tests & proof
 
 ```bash
-npm test
-npm run typecheck
+npm test && npm run typecheck
 ```
-
-## Hackathon proof
 
 | Item | Link |
 |------|------|
 | Demo video | [`docs/demo.mp4`](./docs/demo.mp4) |
-| Onchain tx | [Base Sepolia](https://sepolia.basescan.org/tx/0xebf18e68005f5ffdc75188a116100b9461a789ebf890bb7d7a983ead19504ff5) |
-
-## Security
-
-- Never commit `.env` or private keys  
-- Use throwaway EOA for bootstrap only  
-- Amount `0` self-transfer for first proof on testnet
+| Proof tx | [Base Sepolia](https://sepolia.basescan.org/tx/0xebf18e68005f5ffdc75188a116100b9461a789ebf890bb7d7a983ead19504ff5) |
 
 ## Docs
 
 - [KeeperHub MCP](https://docs.keeperhub.com/ai-tools/mcp-server)
 - [Direct Execution API](https://docs.keeperhub.com/api/direct-execution)
-- [Agentic Wallets / x402](https://docs.keeperhub.com/ai-tools/agentic-wallet)
+- [Agentic Wallets](https://docs.keeperhub.com/ai-tools/agentic-wallet)

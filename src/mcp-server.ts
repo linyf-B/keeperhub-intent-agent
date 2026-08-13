@@ -35,7 +35,9 @@ import { formatX402Instructions, parseMcpPaymentError } from "./x402.js";
 
 const server = new McpServer({
   name: "keeperhub-intent-agent",
-  version: "2.0.0",
+  version: "2.1.0",
+  description:
+    "Dual MCP layer: local REST/workflow tools + bridge to official app.keeperhub.com/mcp. See docs/DUAL_MCP.md",
 });
 
 function jsonText(data: unknown) {

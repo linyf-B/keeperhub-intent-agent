@@ -18,6 +18,8 @@ import {
   stableIdempotencyKey,
   newTaskId,
 } from "./keeperhub.js";
+import { formatAuditTrail } from "./audit.js";
+import { PILLARS, printPitchBanner, VISION } from "./pitch.js";
 
 const cookies = new Map<string, string>();
 
@@ -52,6 +54,10 @@ function must<T>(res: { status: number; body: T }, what: string): T {
 }
 
 async function main() {
+  console.log(printPitchBanner());
+  console.log(`▶ Pillar 1: ${PILLARS.selfOnboard.title}`);
+  console.log(`  ${PILLARS.selfOnboard.tagline}\n`);
+
   const pk = process.env.ETH_PRIVATE_KEY as `0x${string}` | undefined;
   if (!pk?.startsWith("0x")) {
     throw new Error("Set ETH_PRIVATE_KEY=0x... (throwaway wallet for SIWE signup)");
@@ -167,9 +173,17 @@ async function main() {
     "execute",
   ) as any;
   const status = await pollExecutionStatus(apiKey, exec.executionId);
+  console.log("\n── Agent self-onboard complete ──");
+  console.log(VISION);
+  console.log("kh_ key written to .env");
+  console.log("org wallet:", user.walletAddress);
   console.log("bootstrap proof status:", status.status);
   console.log("transactionLink:", status.transactionLink || "(none)");
-  console.log("\nNext: npm start   then:  transfer 0 to " + user.walletAddress);
+  console.log("\n" + formatAuditTrail(status));
+  console.log("\nNext:");
+  console.log("  npm run demo     # pillars 2+3 (audit-first + dual MCP)");
+  console.log("  npm run mcp      # dual MCP local layer");
+  console.log(`  transfer 0 to ${user.walletAddress}`);
 }
 
 main().catch((e) => {

@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "keeperhub-intent-agent-local": {
+      "command": "npx",
+      "args": ["tsx", "src/mcp-server.ts"],
+      "cwd": "D:/_A/MeDOCS/Project/web3/keeperhub-intent-agent",
+      "env": {
+        "KEEPERHUB_API_KEY": "kh_your_org_key_here"
+      }
+    },
+    "keeperhub-official": {
+      "url": "https://app.keeperhub.com/mcp",
+      "headers": {
+        "Authorization": "Bearer kh_your_org_key_here"
+      }
+    }
+  }
+}
